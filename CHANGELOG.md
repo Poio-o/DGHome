@@ -1,5 +1,34 @@
 # Changelog
 
+## v0.2.1 - Corrección Arquitectónica: Desacoplamiento de Prisma y Limpieza de Persistencia [SUB-02-1]
+
+### Modificado
+- Desacoplamiento completo de la capa de persistencia en el cliente web según los requisitos de arquitectura por capas del proyecto (Sección 1 y 2 de las rúbricas)
+- Saneamiento de `package.json` mediante la eliminación de dependencias de servidor y ORM no aplicables a un cliente Angular en navegador
+- Reducción del árbol de dependencias (`node_modules`) mediante `npm prune`, eliminando 174 paquetes huérfanos para aligerar el proyecto
+- Delegación formal del acceso a datos hacia la API REST del backend, dejando el cliente preparado para el consumo mediante `AuthService` y `HttpClient`
+
+### Eliminado
+- `prisma.config.ts` - Archivo de configuración de Prisma eliminado del frontend
+- `prisma/` - Directorio de esquema y contratos de Prisma 8 (`contract.prisma`, `contract.json`, `contract.d.ts`) eliminado
+- `migrations/` - Snapshots y migraciones de base de datos eliminadas del cliente web
+
+### Archivos modificados
+- `package.json` - Retirada de dependencias `@prisma/client`, `@prisma/orm-postgres` y `prisma`
+
+### Archivos eliminados
+- `prisma.config.ts`
+- `prisma/contract.prisma`
+- `prisma/contract.json`
+- `prisma/contract.d.ts`
+- `migrations/app/20261109T1709_init_users_credentials/migration.json`
+- `migrations/app/20261109T1709_init_users_credentials/migration.ts`
+- `migrations/app/20261109T1709_init_users_credentials/ops.json`
+- `migrations/snapshots/ee291a282e27fa83b06404ab7f87c15c276844be823174f3494305a68562b723/contract.d.ts`
+- `migrations/snapshots/ee291a282e27fa83b06404ab7f87c15c276844be823174f3494305a68562b723/contract.json`
+
+---
+
 ## v0.2.0 - Pantallas de Login y Registro, Fondo DigiWorld, Iconos Reutilizables y Enrutamiento
 
 ### Añadido
@@ -9,7 +38,6 @@
 - Componente standalone reutilizable **`<app-icon>`** (`src/app/shared/components/icon/`) para centralizar y unificar todos los iconos vectoriales de la aplicación
 - Configuración de enrutador Angular en `src/app/app.routes.ts` con redirección por defecto a `/login` y navegación fluida entre vistas
 - Imagen de fondo temática de DigiWorld (`public/bg-digiworld.jpg`) integrada en las vistas de autenticación
-- Esquema de base de datos y contrato Prisma 8 (`prisma/contract.prisma`) con migración inicial planificada para PostgreSQL
 
 ### Vistas y navegación
 - `GET /` - Redirección automática a `/login`
@@ -42,9 +70,6 @@
 - `src/app/home/home.html` - Plantilla con layout de cabecera, sidebar y mapa
 - `src/app/home/home.css` - Estilos del layout general y botones
 - `public/bg-digiworld.jpg` - Fondo del mundo digital para las vistas de autenticación
-- `prisma/contract.prisma` - Contrato declarativo de entidades `User` y `Credential`
-- `prisma.config.ts` - Configuración de Prisma ORM para PostgreSQL
-- `migrations/app/` - Migración inicial planificada para PostgreSQL
 
 ---
 
@@ -74,4 +99,3 @@ npm test      # Ejecución de pruebas unitarias
 - `src/main.ts` - Bootstrap de la aplicación Angular standalone
 - `src/styles.css` - Estilos globales de reseteo
 - `.gitignore` - Reglas de exclusión para dependencias y temporales
-
