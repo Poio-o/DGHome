@@ -40,49 +40,75 @@
     <main class="auth-main">
 
       <!-- Login Card -->
-      <div class="auth-card">
+      <form class="auth-card" [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <h1 class="auth-title">DigiHome</h1>
+
+        @if (errorMessage()) {
+          <div class="auth-alert-error" role="alert">
+            {{ errorMessage() }}
+          </div>
+        }
 
         <div class="form-group">
           <input
             type="text"
             class="auth-input"
             placeholder="Enter email/username"
-            [(ngModel)]="email"
+            formControlName="identifier"
+            autocomplete="username"
           />
           <app-icon name="user" class="input-icon" />
         </div>
+        @if (identifier?.invalid && identifier?.touched) {
+          <div class="field-error">
+            @if (identifier?.errors?.['required']) { El usuario o correo es obligatorio }
+            @else if (identifier?.errors?.['minlength']) { Mínimo 3 caracteres }
+          </div>
+        }
 
         <div class="form-group">
           <input
             type="password"
             class="auth-input"
             placeholder="Enter password"
-            [(ngModel)]="password"
+            formControlName="password"
+            autocomplete="current-password"
           />
           <app-icon name="lock" class="input-icon" />
         </div>
+        @if (password?.invalid && password?.touched) {
+          <div class="field-error">
+            @if (password?.errors?.['required']) { La contraseña es obligatoria }
+            @else if (password?.errors?.['minlength']) { Mínimo 6 caracteres }
+          </div>
+        }
 
         <div class="auth-links">
-          <button class="link-btn" (click)="goToRegister()">Register now</button>
-          <button class="link-btn link-right">Forgot password?</button>
+          <button type="button" class="link-btn" (click)="goToRegister()">Register now</button>
+          <button type="button" class="link-btn link-right">Forgot password?</button>
         </div>
 
-        <button class="auth-submit-btn" (click)="onLogin()">Log in</button>
+        <button
+          type="submit"
+          class="auth-submit-btn"
+          [disabled]="isLoading()"
+        >
+          {{ isLoading() ? 'Logging in...' : 'Log in' }}
+        </button>
 
         <!-- Social -->
         <div class="social-icons">
-          <button class="social-btn" aria-label="Facebook">
+          <button type="button" class="social-btn" aria-label="Facebook">
             <app-icon name="facebook" />
           </button>
-          <button class="social-btn" aria-label="Twitter">
+          <button type="button" class="social-btn" aria-label="Twitter">
             <app-icon name="twitter" />
           </button>
-          <button class="social-btn" aria-label="Apple">
+          <button type="button" class="social-btn" aria-label="Apple">
             <app-icon name="apple" />
           </button>
         </div>
-      </div>
+      </form>
 
     </main>
   </div>

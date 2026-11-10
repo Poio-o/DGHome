@@ -1,5 +1,58 @@
 # Changelog
 
+## v0.2.3 - Interceptor HTTP de Autorización Bearer y Protección de Rutas [SUB-02-3]
+
+### Añadido
+- Interceptor HTTP funcional `authInterceptor` (`src/app/core/interceptors/auth.interceptor.ts`) para inyección automática de la cabecera `Authorization: Bearer <token>` en todas las peticiones salientes
+- Registro de `withInterceptors([authInterceptor])` en la configuración global de `provideHttpClient` en `src/app/app.config.ts`
+- Guardia de enrutamiento funcional `authGuard` (`src/app/core/guards/auth.guard.ts`) para control de acceso a vistas protegidas
+- Protección de la ruta `/home` con `canActivate: [authGuard]` para impedir accesos anónimos y redirigir al login
+- Método `getProfile` en `AuthService` para la consulta del perfil del usuario autenticado contra `/auth/me`
+
+### Archivos creados
+- `src/app/core/interceptors/auth.interceptor.ts` - Interceptor de cabecera Bearer
+- `src/app/core/guards/auth.guard.ts` - Guardia de navegación para rutas protegidas
+
+### Archivos modificados
+- `src/app/app.config.ts` - Inclusión de `withInterceptors([authInterceptor])`
+- `src/app/app.routes.ts` - Aplicación de `authGuard` a la ruta `/home`
+- `src/app/core/services/auth.service.ts` - Incorporación del método `getProfile`
+
+---
+
+## v0.2.2 - Servicio de Autenticación y Formularios Reactivos de Login y Registro [SUB-02-2]
+
+### Añadido
+- Servicio `AuthService` (`src/app/core/services/auth.service.ts`) para la comunicación HTTP con los endpoints de login y registro
+- Gestión reactiva del estado de usuario autenticado mediante Signals de Angular (`currentUser`, `isAuthenticated`)
+- Persistencia del token JWT y de la sesión del usuario en `localStorage`
+- Configuración de variables de entorno de desarrollo (`src/environments/environment.ts`) con la URL base de la API REST
+- Configuración de `provideHttpClient()` en `src/app/app.config.ts`
+- Modelos TypeScript tipados para autenticación (`src/app/core/models/auth.models.ts`)
+- Validador personalizado `passwordsMatchValidator` para comprobar coincidencia entre contraseñas en el registro
+- Estilos visuales para mensajes de error de campo (`.field-error`) y alertas del servidor (`.auth-alert-error`)
+- Estado de carga e inhabilitación temporal de botones durante peticiones en vuelo para prevenir envíos duplicados
+
+### Modificado
+- Vista de **Login** (`src/app/login/`): migración de `FormsModule` a `ReactiveFormsModule`, validaciones de campos requeridos y longitud, captura de errores HTTP y redirección automática tras autenticación exitosa
+- Vista de **Registro** (`src/app/register/`): migración a formulario reactivo con validación de formato de email, longitud mínima, confirmación de contraseña y gestión de respuestas de conflicto
+
+### Archivos creados
+- `src/environments/environment.ts` - Configuración de entorno local y endpoints de la API
+- `src/app/core/models/auth.models.ts` - Interfaces tipadas de datos de autenticación
+- `src/app/core/services/auth.service.ts` - Servicio de consumo HTTP y gestión de sesión
+
+### Archivos modificados
+- `src/app/app.config.ts` - Inclusión de `provideHttpClient` en los proveedores de la aplicación
+- `src/app/login/login.ts` - Controlador reactivo del formulario de inicio de sesión
+- `src/app/login/login.html` - Plantilla con vinculación reactiva, alertas y mensajes de error
+- `src/app/login/login.css` - Estilos para alertas de error y estado deshabilitado del botón
+- `src/app/register/register.ts` - Controlador reactivo del formulario de registro y validador de contraseña
+- `src/app/register/register.html` - Plantilla con vinculación reactiva y mensajes de validación
+- `src/app/register/register.css` - Estilos para alertas de error y validaciones
+
+---
+
 ## v0.2.1 - Corrección Arquitectónica: Desacoplamiento de Prisma y Limpieza de Persistencia [SUB-02-1]
 
 ### Modificado
