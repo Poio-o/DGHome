@@ -29,7 +29,11 @@
     <!-- Sidebar -->
     <aside class="sidebar" aria-label="Barra lateral">
 
-      <button class="sidebar-btn" id="btn-perfil" aria-label="Perfil">
+      <button class="sidebar-btn" id="btn-inicio" type="button" aria-label="Inicio" aria-current="page" routerLink="/home">
+        <app-icon name="home" />
+      </button>
+
+      <button class="sidebar-btn" id="btn-perfil" type="button" aria-label="Perfil" routerLink="/profile">
         <app-icon name="user" />
       </button>
 

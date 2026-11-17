@@ -1,0 +1,52 @@
+<div class="page-wrapper">
+  <header class="header">
+    <div class="logo-wrap" aria-label="DigiWorld Logo">
+      <app-icon name="logo-dino" class="logo-svg" />
+    </div>
+
+    <div class="banner-placeholder" aria-label="Banner de eventos">
+      <app-icon name="banner" class="banner-icon" />
+      <span class="banner-text">Banner</span>
+    </div>
+
+    <nav class="nav-buttons" aria-label="Menú principal">
+      <button class="nav-btn" type="button">Digimon</button>
+      <button class="nav-btn" type="button">Digipedia</button>
+      <button class="nav-btn" type="button">Tienda</button>
+      <button class="nav-btn" type="button">Objetos</button>
+    </nav>
+  </header>
+
+  <div class="body-layout">
+    <aside class="sidebar" aria-label="Barra lateral">
+      <button class="sidebar-btn" type="button" aria-label="Inicio" routerLink="/home">
+        <app-icon name="home" />
+      </button>
+      <button class="sidebar-btn" type="button" aria-label="Perfil" routerLink="/profile">
+        <app-icon name="user" />
+      </button>
+      <button class="sidebar-btn" type="button" aria-label="Configuración">
+        <app-icon name="settings" />
+      </button>
+    </aside>
+
+    <main class="find-friends-main">
+      <div class="find-friends-page">
+        <nav class="profile-tabs" aria-label="Secciones sociales">
+          <button class="profile-tab" type="button" routerLink="/profile">Profile</button>
+          <button class="profile-tab" type="button" routerLink="/my-friends">My Friends</button>
+          <button class="profile-tab is-selected" type="button" aria-current="page" routerLink="/find-friends">Add Friends</button>
+        </nav>
+
+        <div class="search-panel">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.8" />
+            <path d="m16 16 5 5" />
+          </svg>
+          <input type="search" aria-label="Buscar por ID o usuario" placeholder="search bar" />
+          <button class="search-button" type="button">Search</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

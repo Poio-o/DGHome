@@ -1,0 +1,47 @@
+<div class="page-wrapper">
+  <header class="header">
+    <div class="logo-wrap" aria-label="DigiWorld Logo">
+      <app-icon name="logo-dino" class="logo-svg" />
+    </div>
+
+    <div class="banner-placeholder" aria-label="Banner de eventos">
+      <app-icon name="banner" class="banner-icon" />
+      <span class="banner-text">Banner</span>
+    </div>
+
+    <nav class="nav-buttons" aria-label="Menú principal">
+      <button class="nav-btn" type="button">Digimon</button>
+      <button class="nav-btn" type="button">Digipedia</button>
+      <button class="nav-btn" type="button">Tienda</button>
+      <button class="nav-btn" type="button">Objetos</button>
+    </nav>
+  </header>
+
+  <div class="body-layout">
+    <aside class="sidebar" aria-label="Barra lateral">
+      <button class="sidebar-btn" type="button" aria-label="Inicio" routerLink="/home">
+        <app-icon name="home" />
+      </button>
+      <button class="sidebar-btn" type="button" aria-label="Perfil" routerLink="/profile">
+        <app-icon name="user" />
+      </button>
+      <button class="sidebar-btn" type="button" aria-label="Configuración">
+        <app-icon name="settings" />
+      </button>
+    </aside>
+
+    <main class="friends-main">
+      <div class="friends-page">
+        <nav class="profile-tabs" aria-label="Secciones sociales">
+          <button class="profile-tab" type="button" routerLink="/profile">Profile</button>
+          <button class="profile-tab is-selected" type="button" aria-current="page" routerLink="/my-friends">My Friends</button>
+          <button class="profile-tab" type="button" routerLink="/find-friends">Add Friends</button>
+        </nav>
+
+        <section class="empty-state" aria-live="polite">
+          <p>Vaya, aún no tienes amigos...</p>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>

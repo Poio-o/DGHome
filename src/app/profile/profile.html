@@ -1,0 +1,79 @@
+<div class="page-wrapper">
+  <header class="header">
+    <div class="logo-wrap" aria-label="DigiWorld Logo">
+      <app-icon name="logo-dino" class="logo-svg" />
+    </div>
+
+    <div class="banner-placeholder" aria-label="Banner de eventos">
+      <app-icon name="banner" class="banner-icon" />
+      <span class="banner-text">Banner</span>
+    </div>
+
+    <nav class="nav-buttons" aria-label="Menú principal">
+      <button class="nav-btn" type="button">Digimon</button>
+      <button class="nav-btn" type="button">Digipedia</button>
+      <button class="nav-btn" type="button">Tienda</button>
+      <button class="nav-btn" type="button">Objetos</button>
+    </nav>
+  </header>
+
+  <div class="body-layout">
+    <aside class="sidebar" aria-label="Barra lateral">
+      <button class="sidebar-btn" type="button" aria-label="Inicio" routerLink="/home">
+        <app-icon name="home" />
+      </button>
+      <button class="sidebar-btn" type="button" aria-label="Perfil" aria-current="page">
+        <app-icon name="user" />
+      </button>
+      <button class="sidebar-btn" type="button" aria-label="Configuración">
+        <app-icon name="settings" />
+      </button>
+    </aside>
+
+    <main class="profile-main">
+      <div class="profile-page">
+        <section class="profile-actions" aria-label="Secciones del perfil">
+          <div class="profile-tabs">
+            <button class="profile-tab is-selected" type="button" aria-current="page" routerLink="/profile">Profile</button>
+            <button class="profile-tab" type="button" routerLink="/my-friends">My Friends</button>
+            <button class="profile-tab" type="button" routerLink="/find-friends">Add Friends</button>
+          </div>
+          <div class="profile-tools">
+            <button class="profile-tab profile-tool" type="button">Social Media Settings</button>
+            <button class="profile-tab profile-tool" type="button">Edit Info</button>
+          </div>
+        </section>
+
+        <section class="profile-card" aria-label="Perfil del entrenador">
+          <div class="profile-uid">UID: 67676769</div>
+
+          <div class="trainer-cover">
+            <div class="cover-placeholder" role="img" aria-label="Espacio reservado para la imagen de portada"></div>
+            <div class="trainer-heading">
+              <div class="avatar-placeholder" role="img" aria-label="Espacio reservado para el avatar">
+                <app-icon name="user" />
+              </div>
+              <div class="trainer-identity">
+                <h1>{{ currentUser()?.username ?? 'Entrenador' }}</h1>
+                <p>Lvl. 67</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="trainer-bio">Hola Soy super mega guay</p>
+
+          <div class="featured-digimon" aria-label="Digimon destacados">
+            @for (slot of featuredDigimon; track slot) {
+              <article class="digimon-card">
+                <div class="digimon-image-placeholder" role="img" [attr.aria-label]="'Espacio reservado para el Digimon destacado ' + (slot + 1)">
+                  <span>Imagen {{ slot + 1 }}</span>
+                </div>
+                <div class="digimon-level">Lvl.60</div>
+              </article>
+            }
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
