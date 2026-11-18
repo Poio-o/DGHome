@@ -177,7 +177,7 @@
   flex: 1;
   min-width: 0;
   overflow: auto;
-  background: linear-gradient(rgba(8, 34, 58, 0.12), rgba(8, 34, 58, 0.12)), url('/bg-digiworld.jpg') center / cover fixed;
+  background: linear-gradient(rgba(8, 34, 58, 0.12), rgba(8, 34, 58, 0.12)), url('/bg-dghome.jpg') center / cover fixed;
 }
 
 .profile-page {

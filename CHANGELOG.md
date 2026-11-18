@@ -82,7 +82,7 @@
 
 ---
 
-## v0.2.0 - Pantallas de Login y Registro, Fondo DigiWorld, Iconos Reutilizables y Enrutamiento
+## v0.2.0 - Pantallas de Login y Registro, Fondo DGHome, Iconos Reutilizables y Enrutamiento
 
 ### Añadido
 - Vista completa de **Login** (`/login`) con formulario de acceso (email/username + password), enlaces de navegación y accesos sociales
@@ -90,7 +90,7 @@
 - Vista principal de **Home** (`/home`) con cabecera interactiva, barra lateral de navegación y área de mapa
 - Componente standalone reutilizable **`<app-icon>`** (`src/app/shared/components/icon/`) para centralizar y unificar todos los iconos vectoriales de la aplicación
 - Configuración de enrutador Angular en `src/app/app.routes.ts` con redirección por defecto a `/login` y navegación fluida entre vistas
-- Imagen de fondo temática de DigiWorld (`public/bg-digiworld.jpg`) integrada en las vistas de autenticación
+- Imagen de fondo temática de DGHome (`public/bg-dghome.jpg`) integrada en las vistas de autenticación
 
 ### Vistas y navegación
 - `GET /` - Redirección automática a `/login`
@@ -122,7 +122,7 @@
 - `src/app/home/home.ts` - Componente de la vista principal Home
 - `src/app/home/home.html` - Plantilla con layout de cabecera, sidebar y mapa
 - `src/app/home/home.css` - Estilos del layout general y botones
-- `public/bg-digiworld.jpg` - Fondo del mundo digital para las vistas de autenticación
+- `public/bg-dghome.jpg` - Fondo de DGHome para las vistas de autenticación
 
 ---
 

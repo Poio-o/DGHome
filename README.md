@@ -119,7 +119,7 @@ En `src/environments/environment.ts`:
 ```typescript
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:3000/api/v1',
+  apiBaseUrl: 'https://dg-backend-tau.vercel.app/api/v1',
   socketUrl: 'http://localhost:3000'
 };
 ```
@@ -130,7 +130,7 @@ export const environment = {
 
 ### Prerrequisitos:
 - Node.js 20+ LTS instalado.
-- Servidor backend DGServer levantado en `http://localhost:3000`.
+- Servidor backend DGServer disponible en `https://dg-backend-tau.vercel.app`.
 
 ### Comandos de Ejecución:
 ```bash
