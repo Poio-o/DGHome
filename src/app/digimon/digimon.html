@@ -1,0 +1,233 @@
+<div class="page-wrapper">
+  <header class="header">
+    <div class="logo-wrap" aria-label="DGHome Logo">
+      <app-icon name="logo-dino" class="logo-svg" />
+    </div>
+
+    <div class="banner-placeholder" aria-label="Banner de eventos">
+      <img src="/assets/banner.png" alt="BANNER" class="banner-img" />
+    </div>
+
+    <nav class="nav-buttons" role="navigation" aria-label="Menú principal">
+      <button class="nav-btn is-active" id="btn-digimon" type="button" routerLink="/digimon">Digimon</button>
+      <button class="nav-btn" id="btn-digipedia" type="button">Digipedia</button>
+      <button class="nav-btn" id="btn-tienda" type="button">Tienda</button>
+      <button class="nav-btn" id="btn-objetos" type="button" routerLink="/inventory">Objetos</button>
+    </nav>
+  </header>
+
+  <div class="body-layout">
+    <aside class="sidebar" aria-label="Barra lateral">
+      <button class="sidebar-btn" id="btn-inicio" type="button" aria-label="Inicio" routerLink="/home">
+        <app-icon name="home" />
+      </button>
+      <button class="sidebar-btn" id="btn-perfil" type="button" aria-label="Perfil" routerLink="/profile">
+        <app-icon name="user" />
+      </button>
+      <button class="sidebar-btn" id="btn-notif" type="button" aria-label="Notificaciones">
+        <app-icon name="bell" />
+      </button>
+      <button class="sidebar-btn" id="btn-mensajes" type="button" aria-label="Mensajes">
+        <app-icon name="mail" />
+      </button>
+      <button class="sidebar-btn" id="btn-config" type="button" aria-label="Configuración">
+        <app-icon name="settings" />
+      </button>
+    </aside>
+
+    <main class="digi-main-layout">
+      <section class="digi-list-area">
+        <div class="search-toolbar">
+          <div class="search-box">
+            <span class="search-icon">⌕</span>
+            <input
+              type="text"
+              placeholder="Buscar por nombre o especie..."
+              [ngModel]="searchQuery()"
+              (ngModelChange)="searchQuery.set($event)"
+            />
+          </div>
+
+          <button
+            type="button"
+            class="tool-btn"
+            [class.is-open]="isFiltersOpen()"
+            (click)="toggleFilters()"
+          >
+            Filtros y orden
+          </button>
+
+          @if (digimonService.isDemoMode()) {
+            <span class="demo-pill" title="Tu cuenta en el backend aún no tiene Digimons, mostrando Digimons de prueba para testear">
+              Modo Demo (Prueba)
+            </span>
+          }
+        </div>
+
+        @if (isFiltersOpen()) {
+          <div class="filter-panel">
+            <div class="filter-group">
+              <label>Generación</label>
+              <select [ngModel]="filterGeneration()" (ngModelChange)="filterGeneration.set($event)">
+                <option value="ALL">Todas</option>
+                @for (opt of generationOptions; track opt) {
+                  @if (opt !== 'ALL') {
+                    <option [value]="opt">{{ opt }}</option>
+                  }
+                }
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Tipo</label>
+              <select [ngModel]="filterType()" (ngModelChange)="filterType.set($event)">
+                <option value="ALL">Todos</option>
+                @for (opt of typeOptions; track opt) {
+                  @if (opt !== 'ALL') {
+                    <option [value]="opt">{{ opt }}</option>
+                  }
+                }
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Atributo</label>
+              <select [ngModel]="filterAttribute()" (ngModelChange)="filterAttribute.set($event)">
+                <option value="ALL">Todos</option>
+                @for (opt of attributeOptions; track opt) {
+                  @if (opt !== 'ALL') {
+                    <option [value]="opt">{{ opt }}</option>
+                  }
+                }
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Ordenar</label>
+              <select [ngModel]="sortOption()" (ngModelChange)="sortOption.set($event)">
+                <option value="default">Por defecto</option>
+                <option value="level-desc">Nivel (Mayor a menor)</option>
+                <option value="level-asc">Nivel (Menor a mayor)</option>
+                <option value="hunger-desc">Hambre (Mayor a menor)</option>
+                <option value="hunger-asc">Hambre (Menor a mayor)</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn-reset-filters" (click)="resetFilters()">
+              Limpiar
+            </button>
+          </div>
+        }
+
+        <div class="digi-grid-scroll">
+          @if (digimonService.isLoading()) {
+            <div class="empty-state-box">
+              <p>Cargando Digimons...</p>
+            </div>
+          } @else if (filteredDigimons().length === 0) {
+            <div class="empty-state-box">
+              <p>No se encontraron Digimons.</p>
+            </div>
+          } @else {
+            <div class="digi-grid">
+              @for (d of filteredDigimons(); track d.id) {
+                <div
+                  class="digi-slot"
+                  [class.is-active]="selectedDigimon()?.id === d.id"
+                  (click)="selectDigimon(d)"
+                  [title]="d.nickname + ' (' + d.speciesName + ' Lv.' + d.level + ')'"
+                >
+                  <img [src]="d.spriteUrl" [alt]="d.nickname" class="slot-sprite" (error)="$any($event.target).src='/favicon.ico'" />
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </section>
+
+      <aside class="digi-detail-panel" aria-label="Ficha de Digimon">
+        @if (selectedDigimon(); as digi) {
+          <div class="detail-card">
+            <div class="stage-frame">
+              <span class="corner-box" aria-hidden="true"></span>
+              <img
+                [src]="digi.fullImageUrl || digi.spriteUrl"
+                [alt]="digi.nickname"
+                class="digi-hero-img"
+                (error)="$any($event.target).src='/favicon.ico'"
+              />
+            </div>
+
+            <div class="name-level-row">
+              <h2 class="digi-name">{{ digi.nickname }}</h2>
+              <span class="digi-level">Lv. {{ digi.level }}</span>
+            </div>
+
+            <div class="bars-container">
+              <div class="bar-row">
+                <span class="bar-lbl">PV</span>
+                <div class="bar-track">
+                  <div class="bar-fill pv-fill" [style.width.%]="digi.baseHp > 100 ? 100 : digi.baseHp"></div>
+                </div>
+                <span class="bar-val">{{ digi.baseHp }}/100</span>
+              </div>
+
+              <div class="bar-row">
+                <span class="bar-lbl">PH</span>
+                <div class="bar-track">
+                  <div class="bar-fill ph-fill" [style.width.%]="digi.baseSp > 100 ? 100 : digi.baseSp"></div>
+                </div>
+                <span class="bar-val">{{ digi.baseSp }}/100</span>
+              </div>
+
+              <div class="exp-block">
+                <div class="bar-track">
+                  <div class="bar-fill exp-fill" [style.width.%]="(digi.currentExp / (digi.maxExp || 100)) * 100"></div>
+                </div>
+                <div class="exp-info">
+                  <span class="exp-lbl">EXP</span>
+                  <span class="talent-lbl">Talento <strong>{{ digi.talent ?? '-' }}</strong></span>
+                  <span class="friend-lbl">Amistad <strong>{{ digi.friendship }}%</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="specs-grid">
+              <div class="specs-table">
+                <div class="spec-row">
+                  <span class="spec-lbl">Generación</span>
+                  <span class="spec-val">{{ digi.generation }}</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-lbl">Tipo</span>
+                  <span class="spec-val">{{ digi.type }}</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-lbl">Atributo</span>
+                  <span class="spec-val">{{ digi.attribute }}</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-lbl">Cansancio</span>
+                  <span class="spec-val">{{ digi.fatigue }}</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-lbl">Hambre</span>
+                  <span class="spec-val">{{ digi.hunger }}/100</span>
+                </div>
+              </div>
+
+              <div class="lore-box">
+                <h4>Descripción</h4>
+                <p>{{ digi.description || 'Sin descripción disponible para este Digimon.' }}</p>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div class="detail-card empty-card">
+            <p>Selecciona un Digimon para ver su información.</p>
+          </div>
+        }
+      </aside>
+    </main>
+  </div>
+</div>

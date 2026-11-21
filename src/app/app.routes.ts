@@ -5,6 +5,8 @@ import { Home } from './home/home';
 import { Profile } from './profile/profile';
 import { MyFriends } from './my-friends/my-friends';
 import { FindFriends } from './find-friends/find-friends';
+import { Inventory } from './inventory/inventory';
+import { Digimon } from './digimon/digimon';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -15,4 +17,7 @@ export const routes: Routes = [
   { path: 'profile', component: Profile, canActivate: [authGuard] },
   { path: 'my-friends', component: MyFriends, canActivate: [authGuard] },
   { path: 'find-friends', component: FindFriends, canActivate: [authGuard] },
+  { path: 'inventory', component: Inventory, canActivate: [authGuard] },
+  { path: 'digimon', component: Digimon, canActivate: [authGuard] },
+  { path: 'digimons', redirectTo: 'digimon', pathMatch: 'full' },
 ];

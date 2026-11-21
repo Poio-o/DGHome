@@ -5,27 +5,32 @@
     </div>
 
     <div class="banner-placeholder" aria-label="Banner de eventos">
-      <app-icon name="banner" class="banner-icon" />
-      <span class="banner-text">Banner</span>
+      <img src="/assets/banner.png" alt="BANNER" class="banner-img" />
     </div>
 
     <nav class="nav-buttons" aria-label="Menú principal">
-      <button class="nav-btn" type="button">Digimon</button>
+      <button class="nav-btn" type="button" routerLink="/digimon">Digimon</button>
       <button class="nav-btn" type="button">Digipedia</button>
       <button class="nav-btn" type="button">Tienda</button>
-      <button class="nav-btn" type="button">Objetos</button>
+      <button class="nav-btn" type="button" routerLink="/inventory">Objetos</button>
     </nav>
   </header>
 
   <div class="body-layout">
     <aside class="sidebar" aria-label="Barra lateral">
-      <button class="sidebar-btn" type="button" aria-label="Inicio" routerLink="/home">
+      <button class="sidebar-btn" id="btn-inicio" type="button" aria-label="Inicio" routerLink="/home">
         <app-icon name="home" />
       </button>
-      <button class="sidebar-btn" type="button" aria-label="Perfil" aria-current="page">
+      <button class="sidebar-btn" id="btn-perfil" type="button" aria-label="Perfil" aria-current="page" routerLink="/profile">
         <app-icon name="user" />
       </button>
-      <button class="sidebar-btn" type="button" aria-label="Configuración">
+      <button class="sidebar-btn" id="btn-notif" type="button" aria-label="Notificaciones">
+        <app-icon name="bell" />
+      </button>
+      <button class="sidebar-btn" id="btn-mensajes" type="button" aria-label="Mensajes">
+        <app-icon name="mail" />
+      </button>
+      <button class="sidebar-btn" id="btn-config" type="button" aria-label="Configuración">
         <app-icon name="settings" />
       </button>
     </aside>

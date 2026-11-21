@@ -1,0 +1,149 @@
+<div class="page-wrapper">
+  <header class="header">
+    <div class="logo-wrap" aria-label="DGHome Logo">
+      <app-icon name="logo-dino" class="logo-svg" />
+    </div>
+
+    <div class="banner-placeholder" aria-label="Banner de eventos">
+      <img src="/assets/banner.png" alt="BANNER" class="banner-img" />
+    </div>
+
+    <nav class="nav-buttons" role="navigation" aria-label="Menú principal">
+      <button class="nav-btn" id="btn-digimon" type="button" routerLink="/digimon">Digimon</button>
+      <button class="nav-btn" id="btn-digipedia" type="button">Digipedia</button>
+      <button class="nav-btn" id="btn-tienda" type="button">Tienda</button>
+      <button class="nav-btn is-active" id="btn-objetos" type="button" routerLink="/inventory">Objetos</button>
+    </nav>
+  </header>
+
+  <div class="body-layout">
+    <aside class="sidebar" aria-label="Barra lateral">
+      <button class="sidebar-btn" id="btn-inicio" type="button" aria-label="Inicio" routerLink="/home">
+        <app-icon name="home" />
+      </button>
+      <button class="sidebar-btn" id="btn-perfil" type="button" aria-label="Perfil" routerLink="/profile">
+        <app-icon name="user" />
+      </button>
+      <button class="sidebar-btn" id="btn-notif" type="button" aria-label="Notificaciones">
+        <app-icon name="bell" />
+      </button>
+      <button class="sidebar-btn" id="btn-mensajes" type="button" aria-label="Mensajes">
+        <app-icon name="mail" />
+      </button>
+      <button class="sidebar-btn" id="btn-config" type="button" aria-label="Configuración">
+        <app-icon name="settings" />
+      </button>
+    </aside>
+
+    <main class="inventory-main-layout">
+      <nav class="category-column" aria-label="Filtro de categorías">
+        @for (cat of categories; track cat.id) {
+          <button
+            type="button"
+            class="cat-side-btn"
+            [class.is-selected]="inventoryService.selectedCategory() === cat.id"
+            (click)="onCategorySelect(cat.id)"
+          >
+            {{ cat.label }}
+          </button>
+        }
+      </nav>
+
+      <section class="inventory-grid-wrap" aria-label="Cuadrícula de objetos">
+        @if (inventoryService.isDemoMode()) {
+          <div class="demo-inventory-notice">
+            <span>Modo Demo: Tu cuenta aún no tiene objetos en el servidor, mostrando objetos de prueba.</span>
+          </div>
+        }
+        <div class="inventory-slots-grid">
+          @for (slot of slots(); track slot.index) {
+            <div
+              class="inventory-slot"
+              [class.has-item]="!!slot.item"
+              [class.is-active]="inventoryService.selectedItem()?.id === slot.item?.id"
+              (click)="slot.item && onSelectItem(slot.item)"
+            >
+              @if (slot.item; as itm) {
+                <img
+                  [src]="itm.iconUrl"
+                  [alt]="itm.name"
+                  class="slot-item-img"
+                  (error)="$any($event.target).src='/favicon.ico'"
+                />
+                @if (itm.quantity > 1) {
+                  <span class="slot-qty">x{{ itm.quantity }}</span>
+                }
+              }
+            </div>
+          }
+        </div>
+      </section>
+
+      <aside class="inventory-detail-panel" aria-label="Detalle del objeto">
+        @if (inventoryService.selectedItem(); as current) {
+          <div class="item-card">
+            <div class="item-stage">
+              <img
+                [src]="current.iconUrl"
+                [alt]="current.name"
+                class="item-hero-img"
+                (error)="$any($event.target).src='/favicon.ico'"
+              />
+            </div>
+
+            <h2 class="item-name">{{ current.name }}</h2>
+
+            <div class="item-meta-row">
+              <span class="meta-lbl">Fech. de obtención:</span>
+              <span class="meta-val">{{ current.obtentionDate || '27/08/2026' }}</span>
+            </div>
+
+            <div class="item-divider"></div>
+
+            <p class="item-desc">
+              {{ current.description }}
+            </p>
+
+            <div class="item-action-area">
+              <button type="button" class="btn-use-item" (click)="openUseModal()">
+                Usar en Digimon
+              </button>
+            </div>
+          </div>
+        } @else {
+          <div class="item-card empty-card">
+            <p>Selecciona un objeto para ver sus detalles.</p>
+          </div>
+        }
+      </aside>
+    </main>
+  </div>
+</div>
+
+@if (isSelectDigimonModalOpen()) {
+  <div class="modal-backdrop" (click)="closeUseModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Selecciona el Digimon receptor</h3>
+        <button type="button" class="modal-close" (click)="closeUseModal()">&times;</button>
+      </div>
+
+      <p class="modal-subtitle">
+        Objeto a utilizar: <strong>{{ inventoryService.selectedItem()?.name }}</strong>
+      </p>
+
+      <div class="digimon-selection-list">
+        @for (digi of digimonService.myDigimons(); track digi.id) {
+          <div class="digi-select-item" (click)="useItemOn(digi)">
+            <img [src]="digi.spriteUrl" [alt]="digi.nickname" class="digi-select-sprite" (error)="$any($event.target).src='/favicon.ico'" />
+            <div class="digi-select-info">
+              <h4>{{ digi.nickname }} <small>({{ digi.speciesName }})</small></h4>
+              <p>Nivel: {{ digi.level }} | Hambre: {{ digi.hunger }}/100 | Bond: {{ digi.friendship }}%</p>
+            </div>
+            <button type="button" class="modal-apply-btn">Aplicar</button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
