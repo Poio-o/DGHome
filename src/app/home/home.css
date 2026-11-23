@@ -257,3 +257,23 @@
   .sidebar { width: 42px; }
   .sidebar-btn { width: 26px; height: 26px; }
 }
+
+/* Main Content y Contenedor de Granja */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  overflow: hidden;
+}
+
+.farm-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #081420;
+  overflow: hidden;
+}

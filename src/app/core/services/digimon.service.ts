@@ -95,4 +95,25 @@ export class DigimonService {
       });
     }
   }
+
+  toggleFarmStatus(digimonId: string): void {
+    const current = this.myDigimons().find((d) => d.id === digimonId);
+    if (!current) return;
+    const nextStatus = !current.isWalking;
+
+    this.myDigimons.update((list) =>
+      list.map((d) => (d.id === digimonId ? { ...d, isWalking: nextStatus } : d))
+    );
+
+    const sel = this.selectedDigimon();
+    if (sel && sel.id === digimonId) {
+      this.selectedDigimon.set({ ...sel, isWalking: nextStatus });
+    }
+
+    if (!this.isDemoMode()) {
+      this.http.patch(`${this.apiUrl}/${digimonId}`, { isWalking: nextStatus }).subscribe({
+        error: (err) => console.warn('Error al actualizar estado en granja:', err),
+      });
+    }
+  }
 }

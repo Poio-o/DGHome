@@ -84,6 +84,10 @@ export class Digimon implements OnInit {
     this.digimonService.selectedDigimon.set(d);
   }
 
+  toggleFarmStatus(digimonId: string): void {
+    this.digimonService.toggleFarmStatus(digimonId);
+  }
+
   toggleFilters(): void {
     this.isFiltersOpen.update((v) => !v);
   }

@@ -135,8 +135,11 @@
                   class="digi-slot"
                   [class.is-active]="selectedDigimon()?.id === d.id"
                   (click)="selectDigimon(d)"
-                  [title]="d.nickname + ' (' + d.speciesName + ' Lv.' + d.level + ')'"
+                  [title]="d.nickname + ' (' + d.speciesName + ' Lv.' + d.level + ')' + (d.isWalking ? ' [En la Granja]' : '')"
                 >
+                  @if (d.isWalking) {
+                    <span class="slot-farm-indicator" title="En la granja"></span>
+                  }
                   <img [src]="d.spriteUrl" [alt]="d.nickname" class="slot-sprite" (error)="$any($event.target).src='/favicon.ico'" />
                 </div>
               }
@@ -149,7 +152,20 @@
         @if (selectedDigimon(); as digi) {
           <div class="detail-card">
             <div class="stage-frame">
-              <span class="corner-box" aria-hidden="true"></span>
+              <button
+                type="button"
+                class="corner-box"
+                [class.is-checked]="digi.isWalking"
+                (click)="toggleFarmStatus(digi.id)"
+                [title]="digi.isWalking ? 'En la granja (Click para retirar)' : 'Fuera de la granja (Click para enviar a la granja)'"
+                aria-label="Alternar presencia en la granja"
+              >
+                @if (digi.isWalking) {
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                }
+              </button>
               <img
                 [src]="digi.fullImageUrl || digi.spriteUrl"
                 [alt]="digi.nickname"
