@@ -187,8 +187,8 @@
 
 .digi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 14px;
 }
 
 .digi-slot {
@@ -230,8 +230,8 @@
 }
 
 .slot-sprite {
-  width: 80%;
-  height: 80%;
+  width: 92%;
+  height: 92%;
   object-fit: contain;
   image-rendering: pixelated;
 }

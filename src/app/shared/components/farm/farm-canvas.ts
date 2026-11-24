@@ -201,9 +201,9 @@ export class FarmCanvasComponent implements OnInit, OnDestroy {
     }
 
     private updateEntitySizes(): void {
-        const baseScreenSize = 42;
+        const baseWorldSize = 100;
         this.entities.forEach((entity) => {
-            const size = (baseScreenSize * entity.scale) / this.zoom;
+            const size = baseWorldSize * entity.scale;
             entity.width = size;
             entity.height = size;
         });
@@ -291,7 +291,7 @@ export class FarmCanvasComponent implements OnInit, OnDestroy {
         if (digimon.generation === 'Baby I' || digimon.generation === 'Baby II') scale = 0.75;
         else if (digimon.generation === 'Ultimate' || digimon.generation === 'Mega') scale = 1.2;
 
-        const baseScreenSize = 42;
+        const baseWorldSize = 84;
         const entity: DigimonEntity = {
             data: digimon,
             x: spawnX,
@@ -308,8 +308,8 @@ export class FarmCanvasComponent implements OnInit, OnDestroy {
             imageError: false,
             bobbingTimer: Math.random() * Math.PI * 2,
             bobbingOffset: 0,
-            width: (baseScreenSize * scale) / this.zoom,
-            height: (baseScreenSize * scale) / this.zoom,
+            width: baseWorldSize * scale,
+            height: baseWorldSize * scale,
             isHovered: false,
             isSelected: false,
         };
@@ -595,6 +595,7 @@ export class FarmCanvasComponent implements OnInit, OnDestroy {
         const renderH = entity.height;
 
         if (entity.imageLoaded && entity.image) {
+            ctx.imageSmoothingEnabled = false;
             ctx.drawImage(entity.image, -renderW / 2, -renderH, renderW, renderH);
         } else {
             ctx.fillStyle = entity.imageError ? '#ef4444' : '#38bdf8';
@@ -680,7 +681,6 @@ export class FarmCanvasComponent implements OnInit, OnDestroy {
         const newZoom = Math.max(minCoverZoom, Math.min(maxZoom, this.zoom + zoomDelta));
         if (Math.abs(newZoom - this.zoom) > 0.001) {
             this.zoom = newZoom;
-            this.updateEntitySizes();
             this.clampCamera();
         }
     }
