@@ -8,11 +8,12 @@ import { FindFriends } from './find-friends/find-friends';
 import { Inventory } from './inventory/inventory';
 import { Digimon } from './digimon/digimon';
 import { authGuard } from './core/guards/auth.guard';
+import { loginGuard } from './core/guards/login.guards';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
+  { path: 'login', component: Login, canActivate: [loginGuard] },
+  { path: 'register', component: Register, canActivate: [loginGuard] },
   { path: 'home', component: Home, canActivate: [authGuard] },
   { path: 'profile', component: Profile, canActivate: [authGuard] },
   { path: 'my-friends', component: MyFriends, canActivate: [authGuard] },
