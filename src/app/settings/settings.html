@@ -1,0 +1,174 @@
+<div class="page-wrapper">
+  <header class="header">
+    <div class="logo-wrap" aria-label="DGHome Logo">
+      <app-icon name="logo-dino" class="logo-svg" />
+    </div>
+
+    <div class="banner-placeholder" aria-label="Banner de eventos">
+      <img src="/assets/banner.png" alt="BANNER" class="banner-img" />
+    </div>
+
+    <nav class="nav-buttons" role="navigation" aria-label="Menú principal">
+      <button class="nav-btn" id="btn-digimon" type="button" routerLink="/digimon">Digimon</button>
+      <button class="nav-btn" id="btn-digipedia" type="button">Digipedia</button>
+      <button class="nav-btn" id="btn-tienda" type="button">Tienda</button>
+      <button class="nav-btn" id="btn-objetos" type="button" routerLink="/inventory">Objetos</button>
+    </nav>
+  </header>
+
+  <div class="body-layout">
+    <aside class="sidebar" aria-label="Barra lateral">
+      <button class="sidebar-btn" id="btn-inicio" type="button" aria-label="Inicio" routerLink="/home">
+        <app-icon name="home" />
+      </button>
+
+      <button class="sidebar-btn" id="btn-perfil" type="button" aria-label="Perfil" routerLink="/profile">
+        <app-icon name="user" />
+      </button>
+
+      <button class="sidebar-btn" id="btn-notif" type="button" aria-label="Notificaciones">
+        <app-icon name="bell" />
+      </button>
+
+      <button class="sidebar-btn" id="btn-mensajes" type="button" aria-label="Mensajes">
+        <app-icon name="mail" />
+      </button>
+
+      <button
+        class="sidebar-btn"
+        id="btn-config"
+        type="button"
+        aria-label="Configuración"
+        aria-current="page"
+        routerLink="/settings"
+      >
+        <app-icon name="settings" />
+      </button>
+    </aside>
+
+    <main class="settings-main" aria-label="Configuración">
+      <section class="settings-panel" aria-labelledby="settings-title">
+        <header class="settings-header">
+          <h1 id="settings-title" class="settings-title">Settings</h1>
+        </header>
+
+        <div class="settings-body">
+          <nav class="settings-tabs" aria-label="Categorías de configuración">
+            @for (tab of tabs; track tab.id) {
+              <button
+                type="button"
+                class="settings-tab-btn"
+                [class.is-active]="activeTab() === tab.id"
+                (click)="selectTab(tab.id)"
+              >
+                {{ tab.label }}
+              </button>
+            }
+          </nav>
+
+          <div class="settings-content">
+            @switch (activeTab()) {
+              @case ('graphics') {
+                <div class="settings-section-label">GRAPHICS</div>
+                <div class="settings-empty-state">
+                  <p>Los ajustes gráficos estarán disponibles próximamente.</p>
+                </div>
+              }
+
+              @case ('input') {
+                <div class="settings-section-label">INPUT</div>
+                <div class="settings-empty-state">
+                  <p>Los ajustes de controles estarán disponibles próximamente.</p>
+                </div>
+              }
+
+              @case ('audio') {
+                <div class="settings-section-label">AUDIO</div>
+                <div class="settings-rows">
+                  <div class="setting-row">
+                    <label class="setting-label" for="master-volume">Master Volume</label>
+                    <div class="setting-control">
+                      <input
+                        id="master-volume"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="80"
+                        class="setting-slider"
+                      />
+                      <span class="setting-value">80%</span>
+                    </div>
+                  </div>
+
+                  <div class="setting-row">
+                    <label class="setting-label" for="music-volume">Music Volume (BGM)</label>
+                    <div class="setting-control">
+                      <input
+                        id="music-volume"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="60"
+                        class="setting-slider"
+                      />
+                      <span class="setting-value">60%</span>
+                    </div>
+                  </div>
+
+                  <div class="setting-row">
+                    <label class="setting-label" for="sfx-volume">Sound Effects (SFX)</label>
+                    <div class="setting-control">
+                      <input
+                        id="sfx-volume"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="90"
+                        class="setting-slider"
+                      />
+                      <span class="setting-value">90%</span>
+                    </div>
+                  </div>
+
+                  <div class="setting-row">
+                    <span class="setting-label">Mute All Audio</span>
+                    <div class="setting-control">
+                      <button type="button" class="setting-pill-btn">Disable</button>
+                    </div>
+                  </div>
+
+                  <div class="setting-row">
+                    <span class="setting-label">Mute Music</span>
+                    <div class="setting-control">
+                      <button type="button" class="setting-pill-btn">Disable</button>
+                    </div>
+                  </div>
+
+                  <div class="setting-row">
+                    <span class="setting-label">Mute Sound Effects</span>
+                    <div class="setting-control">
+                      <button type="button" class="setting-pill-btn">Disable</button>
+                    </div>
+                  </div>
+                </div>
+              }
+
+              @case ('language') {
+                <div class="settings-section-label">LANGUAGE</div>
+                <div class="settings-empty-state">
+                  <p>Los ajustes de idioma estarán disponibles próximamente.</p>
+                </div>
+              }
+            }
+
+            <div class="settings-footer">
+              <button type="button" class="footer-btn">Cancel</button>
+              <button type="button" class="footer-btn">Restore Default</button>
+              <button type="button" class="footer-btn">Apply</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>

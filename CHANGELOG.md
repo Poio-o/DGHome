@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.3.0 - Servicio de Audio con Control de Mute y Ganancia [SUB-12-1]
+
+### Añadido
+- Modelos tipados y catálogo extensible de audio (`src/app/core/models/audio.models.ts`) con soporte para canales independientes de música ambiental (BGM) y efectos de sonido (SFX).
+- Configuración inicial en `SFX_CATALOG` para los efectos disponibles (`click`, `feed`, `error`, `success`) en formato `.mp3`, dejando tipados y preparados sin errores los eventos futuros (`train`, `rest`, `level_up`, `evolution`, `hatch`, `step`).
+- Servicio reactivo `AudioService` (`src/app/core/services/audio.service.ts`) basado en Angular Signals (`masterVolume`, `musicVolume`, `sfxVolume`, `isMasterMuted`, `isMusicMuted`, `isSfxMuted`, `effectiveMusicVolume`, `effectiveSfxVolume`).
+- Persistencia automática de preferencias sonoras en `localStorage` (`dg_audio_preferences`) con validación y acotamiento seguro en rango `[0, 1]`.
+- Control de ganancia independiente y multiplicación de ganancia maestra para música de fondo en bucle suave (`playBgm`, `pauseBgm`, `resumeBgm`, `stopBgm`) y efectos de baja latencia mediante clonación de nodos HTMLAudioElement y precarga (`preloadSfx`).
+- Gestión transparente de la política de reproducción automática de navegadores (*Autoplay Policy*) con desbloqueo en la primera interacción del usuario (`pointerdown`, `keydown`, `touchstart`) y respaldo sintetizado retro con Web Audio API (`OscillatorNode` + `GainNode`) cuando un archivo aún no está disponible.
+- Estructura de directorios lista en `public/assets/audio/bgm/` y `public/assets/audio/sfx/`.
+- Suite de 9 pruebas unitarias automatizadas en `src/app/core/services/audio.service.spec.ts` cubriendo persistencia, clamping, mute independiente, autoplay unlock y degradación segura.
+
+### Archivos creados
+- `src/app/core/models/audio.models.ts` - Tipos de pistas/efectos, preferencias por defecto y catálogos `SFX_CATALOG` y `BGM_CATALOG`
+- `src/app/core/services/audio.service.ts` - Servicio global de audio con Signals, Web Audio API y sincronización en `localStorage`
+- `src/app/core/services/audio.service.spec.ts` - Pruebas unitarias con Vitest y TestBed
+- `public/assets/audio/bgm/.gitkeep` - Directorio destinado a las pistas de música ambiental en formato `.mp3`
+- `public/assets/audio/sfx/.gitkeep` - Directorio destinado a los efectos de sonido en formato `.mp3`
+
+---
+
 ## v0.2.3 - Interceptor HTTP de Autorización Bearer y Protección de Rutas [SUB-02-3]
 
 ### Añadido
