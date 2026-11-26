@@ -183,17 +183,17 @@
               <div class="bar-row">
                 <span class="bar-lbl">PV</span>
                 <div class="bar-track">
-                  <div class="bar-fill pv-fill" [style.width.%]="digi.baseHp > 100 ? 100 : digi.baseHp"></div>
+                  <div class="bar-fill pv-fill" [style.width.%]="digi.baseHp > 0 ? (digi.baseHp / digi.baseHp) * 100 : 0"></div>
                 </div>
-                <span class="bar-val">{{ digi.baseHp }}/100</span>
+                <span class="bar-val">{{ digi.baseHp }}/{{ digi.baseHp }}</span>
               </div>
 
               <div class="bar-row">
                 <span class="bar-lbl">PH</span>
                 <div class="bar-track">
-                  <div class="bar-fill ph-fill" [style.width.%]="digi.baseSp > 100 ? 100 : digi.baseSp"></div>
+                  <div class="bar-fill ph-fill" [style.width.%]="digi.baseSp > 0 ? (digi.baseSp / digi.baseSp) * 100 : 0"></div>
                 </div>
-                <span class="bar-val">{{ digi.baseSp }}/100</span>
+                <span class="bar-val">{{ digi.baseSp }}/{{ digi.baseSp }}</span>
               </div>
 
               <div class="exp-block">
@@ -207,6 +207,32 @@
                 </div>
               </div>
             </div>
+
+            <section class="combat-stats" aria-label="Estadísticas de combate">
+              <h3 class="combat-stats-title">Estadísticas</h3>
+              <div class="combat-stats-grid">
+                <div class="combat-stat">
+                  <span class="combat-stat-label">ATK</span>
+                  <span class="combat-stat-value">{{ digi.baseAtk + digi.npAtk + digi.bonusAtk }}</span>
+                </div>
+                <div class="combat-stat">
+                  <span class="combat-stat-label">DEF</span>
+                  <span class="combat-stat-value">{{ digi.baseDef + digi.npDef + digi.bonusDef }}</span>
+                </div>
+                <div class="combat-stat">
+                  <span class="combat-stat-label">INT</span>
+                  <span class="combat-stat-value">{{ digi.baseInt + digi.npInt + digi.bonusInt }}</span>
+                </div>
+                <div class="combat-stat">
+                  <span class="combat-stat-label">SPI</span>
+                  <span class="combat-stat-value">{{ digi.baseSpi + digi.npSpi + digi.bonusSpi }}</span>
+                </div>
+                <div class="combat-stat">
+                  <span class="combat-stat-label">SPD</span>
+                  <span class="combat-stat-value">{{ digi.baseSpd + digi.npSpd + digi.bonusSpd }}</span>
+                </div>
+              </div>
+            </section>
 
             <div class="specs-grid">
               <div class="specs-table">
